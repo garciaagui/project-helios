@@ -1,0 +1,62 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("POSTGRES_PRISMA_URL") // uses connection pooling
+    // directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model User {
+    id        Int      @id @default(autoincrement())
+    email     String   @unique
+    name      String
+    password  String
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+
+    creditsForSale     Credit[]
+    transactionsBuyer  Transaction[] @relation("buyer")
+    transactionsSeller Transaction[] @relation("seller")
+
+    @@map(name: "users")
+}
+
+model Credit {
+    id             Int          @id @default(autoincrement())
+    unitPrice      Float        @map("unit_price")
+    originalAmount Int          @map("original_amount")
+    currentAmount  Int          @map("current_amount")
+    createdAt      DateTime     @default(now()) @map("created_at")
+    updatedAt      DateTime     @updatedAt @map("updated_at")
+    sellerId       Int          @map("seller_id")
+    status         CreditStatus @default(AVAILABLE)
+
+    seller       User          @relation(fields: [sellerId], references: [id])
+    transactions Transaction[]
+
+    @@map(name: "credits")
+}
+
+model Transaction {
+    id           Int      @id @default(autoincrement())
+    createdAt    DateTime @default(now()) @map("created_at")
+    updatedAt    DateTime @updatedAt @map("updated_at")
+    totalPrice   Float    @map("total_price")
+    creditAmount Int      @map("credit_amount")
+    buyerId      Int      @map("buyer_id")
+    sellerId     Int      @map("seller_id")
+    creditId     Int      @map("credit_id")
+
+    buyer  User   @relation("buyer", fields: [buyerId], references: [id])
+    seller User   @relation("seller", fields: [sellerId], references: [id])
+    credit Credit @relation(fields: [creditId], references: [id])
+
+    @@map(name: "transactions")
+}
+
+enum CreditStatus {
+    AVAILABLE
+    SOLD
+}

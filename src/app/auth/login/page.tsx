@@ -31,10 +31,16 @@ export default function Login() {
   }
 
   return (
-    <main className="flex flex-row">
-      <div className="w-1/2">
+    <main className="flex h-screen flex-row">
+      <div className="flex w-1/2 flex-col items-center gap-8 px-20 py-48">
+        <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">Seja bem-vindo(a)</h3>
+
         <Form {...loginForm}>
-          <form onSubmit={handleSubmit(login)}>
+          <form
+            onSubmit={handleSubmit(login)}
+            className="flex w-1/2 flex-col gap-4"
+            id="login-form"
+          >
             <FormField
               control={control}
               name="email"
@@ -62,12 +68,14 @@ export default function Login() {
                 </FormItem>
               )}
             />
-            <Button type="submit" variant="secondary">
-              Entrar
-            </Button>
           </form>
         </Form>
+        <Button type="submit" className="w-1/2" form="login-form">
+          Entrar
+        </Button>
       </div>
+
+      <div className="w-1/2 border-l-[1px] bg-zinc-900" />
     </main>
   )
 }

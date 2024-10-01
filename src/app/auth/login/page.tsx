@@ -10,6 +10,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import LoadingIcon from '@/components/ui/loading-icon'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -20,6 +21,7 @@ import { LoginType } from './_utils/types'
 
 export default function Login() {
   const [errorMessage, setErrorMessage] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
 
   const router = useRouter()
   const loginForm = useForm<LoginType>({
@@ -33,6 +35,7 @@ export default function Login() {
   const { handleSubmit, control } = loginForm
 
   const login = async (data: LoginType) => {
+    setLoading(true)
     try {
       await requestLogin(data).then(() => {
         setErrorMessage('')
@@ -42,6 +45,7 @@ export default function Login() {
       const err = error as Error
       setErrorMessage(err.message)
     }
+    setLoading(false)
   }
 
   return (
@@ -85,7 +89,7 @@ export default function Login() {
           </form>
         </Form>
         <Button type="submit" className="w-1/2" form="login-form">
-          Entrar
+          {loading ? <LoadingIcon /> : 'Entrar'}
         </Button>
         {errorMessage.length ? <span className="text-destructive">{errorMessage}</span> : ''}
       </div>

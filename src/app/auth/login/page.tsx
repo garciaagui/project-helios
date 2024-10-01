@@ -11,11 +11,17 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { requestLogin } from './_utils/functions'
 import { loginSchema } from './_utils/schemas'
 import { LoginType } from './_utils/types'
 
 export default function Login() {
+  const [errorMessage, setErrorMessage] = useState<string>('')
+
+  const router = useRouter()
   const loginForm = useForm<LoginType>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -26,8 +32,16 @@ export default function Login() {
 
   const { handleSubmit, control } = loginForm
 
-  const login = () => {
-    console.log('test')
+  const login = async (data: LoginType) => {
+    try {
+      await requestLogin(data).then(() => {
+        setErrorMessage('')
+        router.push('/')
+      })
+    } catch (error) {
+      const err = error as Error
+      setErrorMessage(err.message)
+    }
   }
 
   return (
@@ -73,6 +87,7 @@ export default function Login() {
         <Button type="submit" className="w-1/2" form="login-form">
           Entrar
         </Button>
+        {errorMessage.length ? <span className="text-destructive">{errorMessage}</span> : ''}
       </div>
 
       <div className="w-1/2 border-l-[1px] bg-zinc-900" />

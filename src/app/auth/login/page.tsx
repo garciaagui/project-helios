@@ -12,10 +12,10 @@ import {
 import { Input } from '@/components/ui/input'
 import LoadingIcon from '@/components/ui/loading-icon'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { signIn, SignInResponse } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { requestLogin } from './_utils/functions'
 import { loginSchema } from './_utils/schemas'
 import { LoginType } from './_utils/types'
 
@@ -36,14 +36,19 @@ export default function Login() {
 
   const login = async (data: LoginType) => {
     setLoading(true)
-    try {
-      await requestLogin(data).then(() => {
-        setErrorMessage('')
-        router.push('/')
-      })
-    } catch (error) {
-      const err = error as Error
-      setErrorMessage(err.message)
+
+    const response = (await signIn('credentials', {
+      ...data,
+      redirect: false,
+    })) as SignInResponse
+
+    const { ok, error } = response
+
+    if (ok) {
+      setErrorMessage('')
+      router.push('/')
+    } else if (!ok && error) {
+      setErrorMessage(error)
     }
     setLoading(false)
   }

@@ -1,6 +1,7 @@
 import { ThemeProvider } from '@/components/theme-provider'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
+import AuthProvider from './context/AuthProvider'
 import './globals.css'
 
 const geistSans = localFont({
@@ -27,14 +28,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   )

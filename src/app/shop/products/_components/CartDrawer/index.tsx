@@ -8,9 +8,18 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 import { useCart } from '@/context/CartProvider'
+import { useEffect, useState } from 'react'
+import { calculateTotalPrice } from '../../_utils/functions'
+import { CartActions, CartCard } from './_components/'
 
 export default function CartDrawer() {
+  const [totalPrice, setTotalPrice] = useState<string>('')
   const { items } = useCart()
+
+  useEffect(() => {
+    const price = calculateTotalPrice(items)
+    setTotalPrice(price)
+  }, [items])
 
   return (
     <Sheet>
@@ -18,19 +27,23 @@ export default function CartDrawer() {
         <Button variant="secondary">Meu carrinho</Button>
       </SheetTrigger>
 
-      <SheetContent>
+      <SheetContent className="flex h-full flex-col">
         <SheetHeader>
           <SheetTitle>Meu carrinho</SheetTitle>
           <SheetDescription>Aqui estão os itens adicionados</SheetDescription>
         </SheetHeader>
 
-        <div>
+        <div className="mt-6 flex-grow">
           {items.length > 0 ? (
-            items.map((item, index) => (
-              <div key={index}>
-                <p>{item.id}</p>
-              </div>
-            ))
+            <div className="flex h-full flex-col justify-between">
+              <ul className="flex flex-grow list-none flex-col gap-4">
+                {items.map((item, index) => (
+                  <CartCard credit={item} key={index} />
+                ))}
+              </ul>
+
+              <CartActions totalPrice={totalPrice} />
+            </div>
           ) : (
             <p>Seu carrinho está vazio.</p>
           )}

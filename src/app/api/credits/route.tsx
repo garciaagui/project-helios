@@ -25,6 +25,7 @@ export async function GET() {
         return {
           ...credit,
           seller: credit.seller.name,
+          purchaseAmount: 0,
         }
       })
     }

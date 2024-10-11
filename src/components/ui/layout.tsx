@@ -1,12 +1,12 @@
-import Image from 'next/image'
-import backgroundImage from '../../../public/images/image-background.jpg'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
 } from '@/components/ui/navigation-menu'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import Image from 'next/image'
+import backgroundImage from '../../../public/images/image-background.jpg'
 
 export default function Layout({ children }) {
   return (
@@ -33,7 +33,10 @@ export default function Layout({ children }) {
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuLink href="#compra" className="text-lg text-gray-700 hover:text-black">
+              <NavigationMenuLink
+                href="/shop/products"
+                className="text-lg text-gray-700 hover:text-black"
+              >
                 compra
               </NavigationMenuLink>
             </NavigationMenuItem>

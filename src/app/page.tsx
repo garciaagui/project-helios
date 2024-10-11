@@ -1,8 +1,13 @@
-import Layout from '@/components/ui/layout'
+'use client'
+
+import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from './../components/ui/button'
+import Layout from '@/components/ui/layout'
+import { useRouter } from 'next/navigation'
 
 export default function Home() {
+  const router = useRouter()
+
   return (
     <Layout>
       <div className="z-10 flex flex-col items-center space-y-8">
@@ -29,7 +34,11 @@ export default function Home() {
 
         {/* Botões de Ação */}
         <div className="flex space-x-4">
-          <Button size={'lg'} className="bg-[#F7D560] text-gray-800 hover:bg-[#f7c64d]">
+          <Button
+            size={'lg'}
+            className="bg-[#F7D560] text-gray-800 hover:bg-[#f7c64d]"
+            onClick={() => router.push('/shop/products')}
+          >
             Quero Comprar
           </Button>
           <Button size={'lg'} className="bg-[#F7D560] text-gray-800 hover:bg-[#f7c64d]">

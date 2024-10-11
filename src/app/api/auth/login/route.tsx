@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         message: 'Login realizado com sucesso!',
-        data: { id: user.id, name: user.name, email: user.email },
+        data: { user: { id: user.id, name: user.name, email: user.email } },
       },
       { status: 200 },
     )

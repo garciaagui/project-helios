@@ -36,7 +36,7 @@ export default function Products() {
         <CartDrawer />
       </div>
 
-      <div className="flex flex-wrap gap-8 py-4">
+      <div className="flex flex-wrap justify-between gap-8 py-4">
         {credits.map((credit, index) => {
           return <ShopCard credit={credit} key={index} />
         })}

@@ -3,25 +3,36 @@
 import { CustomCredit } from '@/types/global'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
-import { CartDrawer, ShopCard } from './_components'
+import { CartDrawer, ShopCard, SkeletonProducts } from './_components'
 
 export default function Products() {
   const [credits, setCredits] = useState<CustomCredit[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
+
   const { data: session } = useSession()
   const username = session?.token.user.name
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('/api/credits', {
-        method: 'GET',
-      })
-      const { data } = await response.json()
-      setCredits(data)
+      try {
+        const response = await fetch('/api/credits', {
+          method: 'GET',
+        })
+        const { data } = await response.json()
+        setCredits(data)
+      } catch (error) {
+        console.error('Erro ao buscar créditos:', error)
+      } finally {
+        setLoading(false)
+      }
     }
+
     fetchData()
   }, [])
 
-  return (
+  return loading ? (
+    <SkeletonProducts />
+  ) : (
     <main className="mx-auto my-10 flex w-1/2 flex-col gap-y-12">
       <div className="flex justify-between">
         <div className="flex flex-col">

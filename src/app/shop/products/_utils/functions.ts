@@ -1,3 +1,5 @@
+import { CustomCredit } from '@/types/global'
+
 export const convertPriceToBRL = (price: number) => {
   const converted = price.toLocaleString('pt-BR', {
     style: 'currency',
@@ -10,7 +12,7 @@ export const convertPriceToBRL = (price: number) => {
   return formatted
 }
 
-export function convertISODate(date: Date) {
+export const convertISODate = (date: Date) => {
   const reference = new Date(date)
 
   const day = String(reference.getUTCDate()).padStart(2, '0')
@@ -18,4 +20,14 @@ export function convertISODate(date: Date) {
   const year = reference.getUTCFullYear()
 
   return `${day}/${month}/${year}`
+}
+
+export const calculateTotalPrice = (items: CustomCredit[]) => {
+  const totalPrice = items.reduce((total, item) => {
+    return total + item.unitPrice * item.purchaseAmount
+  }, 0)
+
+  const formatted = convertPriceToBRL(totalPrice)
+
+  return formatted
 }

@@ -16,6 +16,7 @@ export async function GET() {
       where: {
         currentAmount: { gt: 0 },
       },
+      orderBy: { id: 'asc' },
     })
 
     if (!credits) {

@@ -16,4 +16,12 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/jsx-filename-extension': [1, { extensions: ['.ts', '.tsx'] }],
   },
+  overrides: [
+    {
+      "files": ["src/components/ui/**"],
+      "rules": {
+        "react/prop-types": "off"
+      }
+    }
+  ]
 }

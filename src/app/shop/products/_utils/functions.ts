@@ -31,3 +31,11 @@ export const calculateTotalPrice = (items: CustomCredit[]) => {
 
   return formatted
 }
+
+export const calculateTotalPurchaseAmount = (items: CustomCredit[]) => {
+  const totalAmount = items.reduce((total, item) => {
+    return total + item.purchaseAmount
+  }, 0)
+
+  return totalAmount
+}

@@ -1,11 +1,18 @@
 import prisma from '@/lib/prisma'
 import { NotFoundException } from '@/utils/exceptions'
 import HttpException from '@/utils/exceptions/HttpException'
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
 export const dynamic = 'force-dynamic'
 
-export async function GET() {
+type ParamsType = {
+  params: {
+    id: string
+  }
+}
+
+export async function GET(req: NextRequest, { params }: ParamsType) {
+  const { id } = params
   let credits
 
   try {
@@ -15,6 +22,7 @@ export async function GET() {
       },
       where: {
         currentAmount: { gt: 0 },
+        sellerId: { not: Number(id) },
       },
       orderBy: { id: 'asc' },
     })

@@ -14,6 +14,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { CheckCircledIcon } from '@radix-ui/react-icons'
 import { useForm } from 'react-hook-form'
 import Summary from '../../Summary'
+import { PurchaseCompletedDialog } from './_components'
 import { formatCardNumber, formatCpf, formatCvv, formatExpirationDate } from './_utils/functions'
 import { creditCardSchema } from './_utils/schemas'
 import { FormData } from './_utils/types'
@@ -25,7 +26,8 @@ export default function Payment() {
     resolver: zodResolver(creditCardSchema),
   })
 
-  const { control, handleSubmit, setValue, getValues } = form
+  const { control, handleSubmit, setValue, getValues, formState } = form
+  const { isSubmitSuccessful } = formState
 
   const finishPurchase = () => {
     const values = getValues()
@@ -162,6 +164,7 @@ export default function Payment() {
           Confirmar compra
         </Button>
       </Summary>
+      {isSubmitSuccessful ? <PurchaseCompletedDialog /> : ''}
     </>
   )
 }

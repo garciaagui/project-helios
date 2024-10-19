@@ -14,6 +14,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { CheckCircledIcon } from '@radix-ui/react-icons'
 import { useForm } from 'react-hook-form'
 import Summary from '../../Summary'
+import { formatCardNumber, formatCpf, formatCvv, formatExpirationDate } from './_utils/functions'
 import { creditCardSchema } from './_utils/schemas'
 import { FormData } from './_utils/types'
 
@@ -32,9 +33,10 @@ export default function Payment() {
   }
 
   const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const input = e.target.value.replace(/\D/g, '').substring(0, 16)
-    const formattedInput = input.replace(/(\d{4})(?=\d)/g, '$1 ')
-    setValue('cardNumber', formattedInput)
+    const input = e.target.value
+    const formatted = formatCardNumber(input)
+
+    setValue('cardNumber', formatted)
   }
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,64 +45,24 @@ export default function Payment() {
   }
 
   const handleExpirationDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let input = e.target.value.replace(/\D/g, '').substring(0, 4) // Remove não numéricos e limita a 4 dígitos
+    const input = e.target.value
+    const formatted = formatExpirationDate(input)
 
-    if (input.length >= 2) {
-      // Pega os primeiros dois dígitos para validar o mês
-      let month = parseInt(input.substring(0, 2))
-
-      // Valida o mês entre 1 e 12
-      if (month < 1) {
-        month = 1
-      } else if (month > 12) {
-        month = 12
-      }
-
-      // Formata o mês para dois dígitos
-      const formattedMonth = month.toString().padStart(2, '0')
-
-      // Se o ano também já estiver presente, valida os dois últimos dígitos
-      if (input.length >= 4) {
-        let year = parseInt(input.substring(2))
-
-        // Valida se o ano é maior ou igual a 24
-        if (year < 24) {
-          year = 24
-        }
-
-        // Atualiza o input com mês e ano validado
-        input = `${formattedMonth}/${year}`
-      } else {
-        // Apenas formata o mês se o ano não estiver completo
-        input = `${formattedMonth}/${input.substring(2)}`
-      }
-    }
-
-    setValue('expirationDate', input)
+    setValue('expirationDate', formatted)
   }
 
   const handleCvvChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let input = e.target.value.replace(/\D/g, '') // Remove qualquer caractere que não seja numérico
+    const input = e.target.value
+    const formatted = formatCvv(input)
 
-    // Limita o número de dígitos a 4
-    input = input.substring(0, 4)
-
-    setValue('cvv', input) // Atualiza o campo CVV com o valor filtrado
+    setValue('cvv', formatted)
   }
 
   const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let input = e.target.value.replace(/\D/g, '') // Remove caracteres não numéricos
+    const input = e.target.value
+    const formatted = formatCpf(input)
 
-    // Formata o CPF no padrão XXX.XXX.XXX-XX
-    if (input.length > 3 && input.length <= 6) {
-      input = `${input.substring(0, 3)}.${input.substring(3)}`
-    } else if (input.length > 6 && input.length <= 9) {
-      input = `${input.substring(0, 3)}.${input.substring(3, 6)}.${input.substring(6)}`
-    } else if (input.length > 9) {
-      input = `${input.substring(0, 3)}.${input.substring(3, 6)}.${input.substring(6, 9)}-${input.substring(9)}`
-    }
-
-    setValue('cpf', input) // Atualiza o campo CPF com o valor formatado
+    setValue('cpf', formatted)
   }
 
   return (

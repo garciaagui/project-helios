@@ -1,4 +1,4 @@
-import { convertPriceToBRL } from '@/app/shop/products/_utils/functions'
+import { convertPriceToBRL } from '@/app/shop/_utils/functions'
 import { CartCardProps } from '@/app/shop/products/_utils/types'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'

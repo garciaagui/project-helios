@@ -9,7 +9,7 @@ import {
   LightningBoltIcon,
   PlusIcon,
 } from '@radix-ui/react-icons'
-import { convertISODate, convertPriceToBRL } from '../../_utils/functions'
+import { convertISODate, convertPriceToBRL } from '../../../_utils/functions'
 import { ShopCardProps } from '../../_utils/types'
 
 export default function ShopCard({ credit }: ShopCardProps) {

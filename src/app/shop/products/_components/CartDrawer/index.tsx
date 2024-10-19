@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/sheet'
 import { useCart } from '@/context/CartProvider'
 import { useEffect, useState } from 'react'
-import { calculateTotalPrice } from '../../_utils/functions'
+import { calculateTotalPrice } from '../../../_utils/functions'
 import { CartActions, CartCard } from './_components/'
 
 export default function CartDrawer() {

@@ -9,30 +9,36 @@ export default function Products() {
   const [credits, setCredits] = useState<CustomCredit[]>([])
   const [loading, setLoading] = useState<boolean>(true)
 
-  const { data: session } = useSession()
-  const username = session?.token.user.name
+  const { data: session, status } = useSession()
+  const username = session?.token?.user?.name
+  const userId = session?.token?.user?.id as string
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/api/credits', {
-          method: 'GET',
-        })
-        const { data } = await response.json()
-        setCredits(data)
-      } catch (error) {
-        console.error('Erro ao buscar créditos:', error)
-      } finally {
-        setLoading(false)
+    if (status === 'authenticated' && userId) {
+      const fetchData = async () => {
+        try {
+          const response = await fetch(`/api/credits/${userId}`, {
+            method: 'GET',
+          })
+
+          const { data } = await response.json()
+          setCredits(data)
+        } catch (error) {
+          console.error('Erro ao buscar créditos:', error)
+        } finally {
+          setLoading(false)
+        }
       }
+
+      fetchData()
     }
+  }, [status, userId])
 
-    fetchData()
-  }, [])
+  if (loading || status === 'loading') {
+    return <SkeletonProducts />
+  }
 
-  return loading ? (
-    <SkeletonProducts />
-  ) : (
+  return (
     <main className="mx-auto my-10 flex w-1/2 flex-col gap-y-12">
       <div className="flex justify-between">
         <div className="flex flex-col">
@@ -47,7 +53,7 @@ export default function Products() {
         <CartDrawer />
       </div>
 
-      <div className="flex flex-wrap justify-between gap-8 py-4">
+      <div className="flex flex-wrap gap-x-20 gap-y-8 py-4">
         {credits.map((credit, index) => {
           return <ShopCard credit={credit} key={index} />
         })}

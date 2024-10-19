@@ -1,10 +1,10 @@
 import { convertISODate, convertPriceToBRL } from '@/app/shop/_utils/functions'
+import { CheckoutCardProps } from '@/app/shop/checkout/_utils/types'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { useCart } from '@/context/CartProvider'
 import { AvatarIcon, CalendarIcon, InfoCircledIcon, TrashIcon } from '@radix-ui/react-icons'
-import { CheckoutCardProps } from '../../_utils/types'
 
 export default function CheckoutCard({ credit }: CheckoutCardProps) {
   const { removeItem, updatePurchaseAmount } = useCart()

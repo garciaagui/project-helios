@@ -25,7 +25,7 @@ export default function CartCard({ credit }: CartCardProps) {
             <TrashIcon width={16} height={16} />
           </Button>
         </div>
-        <span className="text-sm"># {id}</span>
+        <span className="text-sm">Código: #{id}</span>
       </CardHeader>
       <CardContent className="flex flex-col gap-3 px-4 py-3">
         <div className="flex items-center gap-3">

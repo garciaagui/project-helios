@@ -33,7 +33,7 @@ export default function CartDrawer() {
           <SheetDescription>Aqui estão os itens adicionados</SheetDescription>
         </SheetHeader>
 
-        <div className="mt-6 flex-grow">
+        <div className="mt-6 flex-grow overflow-auto">
           {items.length > 0 ? (
             <div className="flex h-full flex-col justify-between">
               <ul className="flex flex-grow list-none flex-col gap-4">

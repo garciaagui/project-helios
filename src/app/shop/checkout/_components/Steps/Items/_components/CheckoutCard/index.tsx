@@ -1,14 +1,14 @@
-import { convertPriceToBRL } from '@/app/shop/_utils/functions'
-import { CartCardProps } from '@/app/shop/products/_utils/types'
+import { convertISODate, convertPriceToBRL } from '@/app/shop/_utils/functions'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { useCart } from '@/context/CartProvider'
-import { InfoCircledIcon, TrashIcon } from '@radix-ui/react-icons'
+import { AvatarIcon, CalendarIcon, InfoCircledIcon, TrashIcon } from '@radix-ui/react-icons'
+import { CheckoutCardProps } from '../../_utils/types'
 
-export default function CartCard({ credit }: CartCardProps) {
+export default function CheckoutCard({ credit }: CheckoutCardProps) {
   const { removeItem, updatePurchaseAmount } = useCart()
-  const { id, currentAmount, purchaseAmount, unitPrice } = credit
+  const { id, currentAmount, purchaseAmount, unitPrice, seller, createdAt } = credit
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputAmount = parseInt(e.target.value, 10) || 1
@@ -26,7 +26,18 @@ export default function CartCard({ credit }: CartCardProps) {
           </Button>
         </div>
         <span className="text-sm">Código: #{id}</span>
+
+        <div className="flex items-center gap-2">
+          <AvatarIcon />
+          <span className="text-sm">Vendedor: {seller}</span>
+        </div>
+
+        <div className="mb-2 flex items-center gap-2">
+          <CalendarIcon />
+          <span className="text-sm">Postado: {convertISODate(createdAt)}</span>
+        </div>
       </CardHeader>
+
       <CardContent className="flex flex-col gap-3 px-4 py-3">
         <div className="flex items-center gap-3">
           <span>Quantidade:</span>

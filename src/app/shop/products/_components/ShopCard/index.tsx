@@ -26,7 +26,7 @@ export default function ShopCard({ credit }: ShopCardProps) {
         <LightningBoltIcon width={30} height={30} />
         <div>
           <CardTitle className="text-lg">{convertPriceToBRL(unitPrice)} por kWh</CardTitle>
-          <span className="text-sm"># {id}</span>
+          <span className="text-sm">Código: #{id}</span>
         </div>
       </CardHeader>
 

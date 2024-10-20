@@ -23,11 +23,6 @@ export const requestLogin = async (data: Credentials) => {
     body,
   })
 
-  if (!response.ok) {
-    const errorData = await response.json()
-    throw new Error(errorData.message)
-  }
-
   return response
 }
 
@@ -47,6 +42,7 @@ export const options: NextAuthOptions = {
 
           if (!response.ok) {
             const errorData = await response.json()
+            console.log(`Console log 1: ${errorData.message}`)
             throw new Error(errorData.message)
           } else {
             const result = await response.json()

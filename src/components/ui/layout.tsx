@@ -6,9 +6,14 @@ import {
   NavigationMenuList,
 } from '@/components/ui/navigation-menu'
 import Image from 'next/image'
+import { ReactNode } from 'react'
 import backgroundImage from '../../../public/images/image-background.jpg'
 
-export default function Layout({ children }) {
+type LayoutProps = {
+  children: ReactNode
+}
+
+export default function Layout({ children }: LayoutProps) {
   return (
     <div className="relative flex min-h-screen flex-col">
       {/* Imagem de fundo */}

@@ -1,5 +1,8 @@
+import * as env from 'dotenv'
 import type { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
+
+env.config()
 
 type Credentials = {
   email: string
@@ -14,8 +17,9 @@ type User = {
 
 export const requestLogin = async (data: Credentials) => {
   const body = JSON.stringify(data)
+  const URL = process.env.NEXT_PUBLIC_URL as string
 
-  const response = await fetch('http://localhost:3000/api/auth/login', {
+  const response = await fetch(`${URL}/api/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -42,7 +46,6 @@ export const options: NextAuthOptions = {
 
           if (!response.ok) {
             const errorData = await response.json()
-            console.log(`Console log 1: ${errorData.message}`)
             throw new Error(errorData.message)
           } else {
             const result = await response.json()

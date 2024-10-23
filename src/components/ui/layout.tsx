@@ -5,6 +5,8 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from '@/components/ui/navigation-menu'
+import { useToast } from '@/hooks/use-toast'
+import { cn } from '@/lib/shadcn'
 import Image from 'next/image'
 import { ReactNode } from 'react'
 import backgroundImage from '../../../public/images/image-background.jpg'
@@ -14,6 +16,15 @@ type LayoutProps = {
 }
 
 export default function Layout({ children }: LayoutProps) {
+  const { toast } = useToast()
+
+  const toastProps = {
+    title: 'Pagina ainda não implementada!',
+    description: 'Páginas disponíveis: Compra e Venda',
+    className: cn('top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4'),
+    duration: 2000,
+  }
+
   return (
     <div className="relative flex min-h-screen flex-col">
       {/* Imagem de fundo */}
@@ -33,7 +44,13 @@ export default function Layout({ children }: LayoutProps) {
         <NavigationMenu>
           <NavigationMenuList className="flex space-x-6">
             <NavigationMenuItem>
-              <NavigationMenuLink href="#sobre" className="text-lg text-gray-700 hover:text-black">
+              <NavigationMenuLink
+                href="#sobre"
+                className="text-lg text-gray-700 hover:text-black"
+                onClick={() => {
+                  toast({ ...toastProps, variant: 'destructive' })
+                }}
+              >
                 sobre
               </NavigationMenuLink>
             </NavigationMenuItem>
@@ -46,7 +63,7 @@ export default function Layout({ children }: LayoutProps) {
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuLink href="#venda" className="text-lg text-gray-700 hover:text-black">
+              <NavigationMenuLink href="/sale" className="text-lg text-gray-700 hover:text-black">
                 venda
               </NavigationMenuLink>
             </NavigationMenuItem>
@@ -54,6 +71,9 @@ export default function Layout({ children }: LayoutProps) {
               <NavigationMenuLink
                 href="#contato"
                 className="text-lg text-gray-700 hover:text-black"
+                onClick={() => {
+                  toast({ ...toastProps, variant: 'destructive' })
+                }}
               >
                 contato
               </NavigationMenuLink>

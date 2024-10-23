@@ -1,4 +1,5 @@
 import { ThemeProvider } from '@/components/theme-provider'
+import { Toaster } from '@/components/ui/toaster'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import AuthProvider from '../context/AuthProvider'
@@ -36,6 +37,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             {children}
+            <Toaster />
           </ThemeProvider>
         </AuthProvider>
       </body>

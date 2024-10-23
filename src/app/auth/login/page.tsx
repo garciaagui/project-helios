@@ -11,6 +11,8 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import LoadingIcon from '@/components/ui/loading-icon'
+import { useToast } from '@/hooks/use-toast'
+import { cn } from '@/lib/shadcn'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { signIn, SignInResponse } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
@@ -22,6 +24,14 @@ import { LoginType } from './_utils/types'
 export default function Login() {
   const [errorMessage, setErrorMessage] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
+
+  const { toast } = useToast()
+  const toastProps = {
+    title: 'Login bem-sucedido!',
+    description: 'Você será redirecionado para a tela inicial',
+    className: cn('top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4'),
+    duration: 2000,
+  }
 
   const router = useRouter()
   const loginForm = useForm<LoginType>({
@@ -45,6 +55,7 @@ export default function Login() {
     const { ok, error } = response
 
     if (ok) {
+      toast({ ...toastProps })
       setErrorMessage('')
       router.push('/')
     } else if (!ok && error) {
@@ -96,6 +107,9 @@ export default function Login() {
         <Button type="submit" className="w-1/2" form="login-form">
           {loading ? <LoadingIcon /> : 'Entrar'}
         </Button>
+        <p>joao.silva@example.com</p>
+        <p>senha123</p>
+
         {errorMessage.length ? <span className="text-destructive">{errorMessage}</span> : ''}
       </div>
 

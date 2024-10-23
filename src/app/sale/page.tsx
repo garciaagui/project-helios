@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { SaleCompletedDialog } from './_components'
 import { productSaleSchema } from './_utils/schemas'
 import { FormData } from './_utils/types'
 
@@ -24,7 +25,8 @@ export default function Sale() {
     resolver: zodResolver(productSaleSchema),
   })
 
-  const { control, handleSubmit, watch, setValue } = form
+  const { control, handleSubmit, setValue, formState } = form
+  const { isSubmitSuccessful } = formState
 
   const formatToBRL = (value: number) => {
     return new Intl.NumberFormat('pt-BR', {
@@ -56,8 +58,7 @@ export default function Sale() {
   }
 
   const finishSale = () => {
-    const data = watch()
-    console.log(data)
+    console.log('Processo concluído!')
   }
 
   return (
@@ -72,7 +73,7 @@ export default function Sale() {
       <Form {...form}>
         <form
           onSubmit={handleSubmit(finishSale)}
-          className="flex w-1/2 flex-col gap-4"
+          className="flex w-1/2 flex-col gap-8"
           id="sale-form"
         >
           <FormField
@@ -110,6 +111,10 @@ export default function Sale() {
                     onChange={handleUnitPriceChange}
                   />
                 </FormControl>
+                <FormDescription>Valor mínimo: R$ 0,10</FormDescription>
+                <FormDescription>
+                  Nossa plataforma cobra uma taxa de 10% sobre o valor unitário
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -125,7 +130,7 @@ export default function Sale() {
                   <Input type="file" onChange={handleFileChange} />
                 </FormControl>
                 <FormDescription>
-                  Insira o documento que comprova os créditos que serão vendidos
+                  Insira o documento que comprove os créditos que serão vendidos (formato PDF)
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -136,6 +141,7 @@ export default function Sale() {
           </Button>
         </form>
       </Form>
+      {isSubmitSuccessful ? <SaleCompletedDialog /> : ''}
     </main>
   )
 }

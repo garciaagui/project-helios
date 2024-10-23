@@ -3,11 +3,9 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import Layout from '@/components/ui/layout'
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 export default function Home() {
-  const router = useRouter()
-
   return (
     <Layout>
       <div className="z-10 flex flex-col items-center space-y-8">
@@ -34,15 +32,11 @@ export default function Home() {
 
         {/* Botões de Ação */}
         <div className="flex space-x-4">
-          <Button
-            size={'lg'}
-            className="bg-[#F7D560] text-gray-800 hover:bg-[#f7c64d]"
-            onClick={() => router.push('/shop/products')}
-          >
-            Quero Comprar
+          <Button size={'lg'} className="bg-[#F7D560] text-gray-800 hover:bg-[#f7c64d]">
+            <Link href={'/shop/products'}>Quero Comprar</Link>
           </Button>
           <Button size={'lg'} className="bg-[#F7D560] text-gray-800 hover:bg-[#f7c64d]">
-            Quero Vender
+            <Link href={'/sale'}>Quero Vender</Link>
           </Button>
         </div>
       </div>

@@ -46,7 +46,7 @@ export default function Layout({ children }: LayoutProps) {
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuLink href="#venda" className="text-lg text-gray-700 hover:text-black">
+              <NavigationMenuLink href="/sale" className="text-lg text-gray-700 hover:text-black">
                 venda
               </NavigationMenuLink>
             </NavigationMenuItem>

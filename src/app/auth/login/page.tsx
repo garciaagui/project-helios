@@ -107,8 +107,6 @@ export default function Login() {
         <Button type="submit" className="w-1/2" form="login-form">
           {loading ? <LoadingIcon /> : 'Entrar'}
         </Button>
-        <p>joao.silva@example.com</p>
-        <p>senha123</p>
 
         {errorMessage.length ? <span className="text-destructive">{errorMessage}</span> : ''}
       </div>

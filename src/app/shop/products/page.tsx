@@ -39,7 +39,7 @@ export default function Products() {
   }
 
   return (
-    <main className="mx-auto my-10 flex w-1/2 flex-col gap-y-12">
+    <main className="mx-auto my-10 flex w-3/4 flex-col gap-y-12">
       <div className="flex justify-between">
         <div className="flex flex-col">
           <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">

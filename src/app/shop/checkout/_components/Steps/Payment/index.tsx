@@ -72,7 +72,7 @@ export default function Payment() {
       <Form {...form}>
         <form
           onSubmit={handleSubmit(finishPurchase)}
-          className="flex w-1/2 flex-col gap-4"
+          className="flex w-1/3 flex-col gap-4"
           id="payment-form"
         >
           <FormField

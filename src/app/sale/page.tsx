@@ -73,7 +73,7 @@ export default function Sale() {
       <Form {...form}>
         <form
           onSubmit={handleSubmit(finishSale)}
-          className="flex w-1/2 flex-col gap-8"
+          className="flex w-full flex-col gap-8"
           id="sale-form"
         >
           <FormField

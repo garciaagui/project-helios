@@ -21,7 +21,7 @@ export default function ShopCard({ credit }: ShopCardProps) {
   }
 
   return (
-    <Card className="w-1/5">
+    <Card className="w-64">
       <CardHeader className="flex flex-row items-center gap-3 border-b-[1px] p-4">
         <LightningBoltIcon width={30} height={30} />
         <div>

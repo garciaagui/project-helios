@@ -1,5 +1,6 @@
 'use client'
 
+import { NavigationMenu } from '@/components/navigation-menu'
 import { CustomCredit } from '@/types/global'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
@@ -39,25 +40,28 @@ export default function Products() {
   }
 
   return (
-    <main className="mx-auto my-10 flex w-3/4 flex-col gap-y-12">
-      <div className="flex justify-between">
-        <div className="flex flex-col">
-          <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-            Olá, {username}
-          </h2>
-          <p className="[&:not(:first-child)] leading-7">
-            Navegue pelas opções abaixo e faça sua compra 😃
-          </p>
+    <>
+      <NavigationMenu />
+      <main className="mx-auto my-10 flex w-3/4 flex-col gap-y-12">
+        <div className="flex justify-between">
+          <div className="flex flex-col">
+            <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+              Olá, {username}
+            </h2>
+            <p className="[&:not(:first-child)] leading-7">
+              Navegue pelas opções abaixo e faça sua compra 😃
+            </p>
+          </div>
+
+          <CartDrawer />
         </div>
 
-        <CartDrawer />
-      </div>
-
-      <div className="flex flex-wrap gap-x-20 gap-y-8 py-4">
-        {credits.map((credit, index) => {
-          return <ShopCard credit={credit} key={index} />
-        })}
-      </div>
-    </main>
+        <div className="flex flex-wrap gap-x-20 gap-y-8 py-4">
+          {credits.map((credit, index) => {
+            return <ShopCard credit={credit} key={index} />
+          })}
+        </div>
+      </main>
+    </>
   )
 }
